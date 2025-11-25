@@ -51,6 +51,17 @@ const App: React.FC = () => {
     }
   }, []);
 
+  // Enhanced key validation - check for empty or invalid keys
+  useEffect(() => {
+    const key = getStoredApiKey();
+    if (key && (key.trim() === "" || key.length < 10)) {
+      // Key exists but is invalid, force re-entry
+      setStoredApiKey("");
+      setShowKeyModal(true);
+      showToast("Ungültiger API Key, bitte erneut eingeben", "error");
+    }
+  }, []);
+
   useEffect(() => {
     try {
         localStorage.setItem('kleinanzeigen-saved-items', JSON.stringify(savedItems));
@@ -74,10 +85,17 @@ const App: React.FC = () => {
   const handleSaveApiKey = async (newKey: string) => {
     const validKey = newKey.trim();
     if (validKey.length > 0) {
-      setStoredApiKey(validKey);
-      setApiKeyInput(validKey);
-      setShowKeyModal(false);
-      showToast("OpenRouter Key dauerhaft gespeichert", "success");
+      // Basic validation for OpenRouter key format
+      if (validKey.startsWith("sk-or-") && validKey.length >= 50) {
+        setStoredApiKey(validKey);
+        setApiKeyInput(validKey);
+        setShowKeyModal(false);
+        showToast("OpenRouter Key dauerhaft gespeichert", "success");
+      } else {
+        showToast("Ungültiges Key-Format. Bitte mit 'sk-or-' beginnen und vollständig eingeben", "error");
+      }
+    } else {
+      showToast("Bitte einen gültigen API Key eingeben", "error");
     }
   };
 
@@ -114,7 +132,7 @@ const App: React.FC = () => {
       console.error(err);
       
       // Critical Auth Errors -> Stop and ask for key
-      if (err.message === "API_KEY_MISSING" || err.message === "AUTH_ERROR") {
+      if (err.message === "API_KEY_MISSING" || err.message === "AUTH_ERROR" || err.message === "API_KEY_INVALID") {
         setAppState(AppState.IDLE);
         setShowKeyModal(true);
         setErrorMsg("Authentifizierung fehlgeschlagen. Bitte Key prüfen.");

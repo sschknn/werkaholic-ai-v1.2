@@ -60,8 +60,13 @@ function cleanAndParseJSON(text: string): any {
 async function callAIWithFallback(messages: any[], temperature: number = 0.4) {
   const openRouterKey = getStoredApiKey();
   
-  if (!openRouterKey) {
+  if (!openRouterKey || openRouterKey.trim() === "") {
       throw new Error("API_KEY_MISSING");
+  }
+  
+  // Additional validation for key format
+  if (!openRouterKey.startsWith("sk-or-") || openRouterKey.length < 50) {
+      throw new Error("API_KEY_INVALID");
   }
 
   let lastError = null;
