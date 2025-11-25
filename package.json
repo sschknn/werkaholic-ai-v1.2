@@ -1,7 +1,7 @@
 {
   "name": "kleinanzeigen-genius-ai",
-  "version": "1.2.0",
-  "description": "KI-gestützte Kleinanzeigen Erstellung",
+  "version": "1.3_inserieren",
+  "description": "KI-gestützte Kleinanzeigen Erstellung mit automatischer Formular-Vervollständigung",
   "main": "main.js",
   "scripts": {
     "dev": "vite",

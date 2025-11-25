@@ -268,9 +268,62 @@ export const ResultEditor: React.FC<ResultEditorProps> = ({ data, sources, image
   const handlePostClick = () => {
     // Smart Action: Copy description automatically
     copyToClipboard(ad.description, 'auto-desc');
-    // Correct URL for posting a new ad
-    window.open('https://www.kleinanzeigen.de/p-anzeige-aufgeben.html', '_blank');
+    
+    // Enhanced posting URL with form pre-fill parameters for Kleinanzeigen
+    const postUrl = generateKleinanzeigenPostUrl(ad);
+    window.open(postUrl, '_blank');
     onShowMessage("Kleinanzeigen wird geöffnet & Text kopiert", "success");
+  };
+
+  const generateKleinanzeigenPostUrl = (adData: AdData): string => {
+    // Kleinanzeigen form parameters mapping
+    const params = new URLSearchParams();
+    
+    // Title parameter
+    params.set('title', adData.title);
+    
+    // Description parameter (with line breaks converted to %0A for URL encoding)
+    params.set('description', adData.description.replace(/\n/g, '%0A'));
+    
+    // Price parameter
+    params.set('price', adData.suggestedPrice.toString());
+    
+    // Category - Kleinanzeigen uses specific category IDs, we'll use a general mapping
+    const categoryMap: Record<string, string> = {
+      'Elektronik': '1',
+      'Kleidung': '2',
+      'Möbel': '3',
+      'Haushalt': '4',
+      'Spielzeug': '5',
+      'Bücher': '6',
+      'Sport': '7',
+      'Freizeit': '8',
+      'Kraftfahrzeuge': '9',
+      'Wohnen': '10'
+    };
+    
+    const categoryId = categoryMap[adData.category] || '1'; // Default to Elektronik
+    params.set('categoryId', categoryId);
+    
+    // Condition parameter mapping
+    const conditionMap: Record<string, string> = {
+      'Neu': 'new',
+      'Sehr gut': 'very_good',
+      'Gut': 'good',
+      'In Ordnung': 'acceptable',
+      'Defekt': 'defective'
+    };
+    
+    const conditionValue = conditionMap[adData.condition] || 'good';
+    params.set('condition', conditionValue);
+    
+    // Keywords/tags
+    if (adData.keywords.length > 0) {
+      params.set('tags', adData.keywords.join(','));
+    }
+    
+    // Navigate to step 2 of the posting process where form is filled
+    return `https://www.kleinanzeigen.de/p-anzeige-aufgeben-schritt2.html?${params.toString()}`;
   };
 
   const handleDownloadImage = () => {
