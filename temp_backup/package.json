@@ -1,0 +1,33 @@
+{
+  "name": "kleinanzeigen-genius-ai",
+  "version": "1.0.0",
+  "description": "KI-gestützte Kleinanzeigen Erstellung",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --linux AppImage"
+  },
+  "author": "Dein Name",
+  "license": "MIT",
+  "build": {
+    "appId": "com.genius.ai",
+    "productName": "Kleinanzeigen Genius",
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Utility",
+      "icon": "icon.png"
+    },
+    "files": [
+      "**/*",
+      "!dist",
+      "!node_modules"
+    ]
+  },
+  "devDependencies": {
+    "electron": "^29.0.0",
+    "electron-builder": "^24.13.3"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Kleinanzeigen Genius AI",
+  "description": "An intelligent assistant that analyzes item photos, researches market prices via Google Search, and generates ready-to-post classified ads automatically.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}

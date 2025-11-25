@@ -1,0 +1,196 @@
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #0f172a; /* Slate 900 */
+  color: #f8fafc;
+  user-select: none; /* Macht es mehr "App-like" */
+}
+
+/* Erlaubt Text-Selektion in Eingabefeldern wieder */
+input, textarea, .selectable {
+  user-select: text;
+}
+
+/* Custom scrollbar for smoother feel */
+::-webkit-scrollbar {
+  width: 8px;
+  background: #0f172a;
+}
+::-webkit-scrollbar-track {
+  background: #1e293b; 
+}
+::-webkit-scrollbar-thumb {
+  background: #475569; 
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #64748b; 
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translate(-50%, 20px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+.animate-fade-in-up {
+  animation: fadeInUp 0.4s ease-out forwards;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+
+/* Mobile-first responsive utilities */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .text-sm {
+    font-size: 0.875rem;
+  }
+  
+  .text-lg {
+    font-size: 1.125rem;
+  }
+}
+
+/* Touch-friendly adjustments for mobile */
+@media (hover: none) {
+  button:active {
+    transform: scale(0.98);
+  }
+  
+  .clickable {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 768px) {
+  /* Larger touch targets */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 12px;
+  }
+  
+  /* Better scrolling on iOS */
+  body {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Prevent zoom on form inputs */
+  input, textarea {
+    font-size: 16px;
+  }
+  
+  /* Mobile navigation improvements */
+  .mobile-header {
+    height: 56px;
+    padding: 0 16px;
+  }
+  
+  /* Touch gesture improvements */
+  .swipeable {
+    scroll-snap-type: y mandatory;
+    overflow-y: auto;
+  }
+  
+  /* Reduce motion for mobile */
+  * {
+    scroll-behavior: smooth;
+  }
+}
+
+/* High contrast for better readability */
+@media (prefers-contrast: high) {
+  .bg-slate-800 {
+    background-color: #1e293b;
+  }
+  
+  .text-slate-400 {
+    color: #cbd5e1;
+  }
+}
+
+/* Dark mode optimizations */
+@media (prefers-color-scheme: dark) {
+  .contrast-card {
+    border: 1px solid #334155;
+    background: #0f172a;
+  }
+}
+
+/* Performance optimizations */
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Smooth animations */
+.smooth-transition {
+  transition-property: transform, opacity, background-color, border-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .no-motion {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Focus management for accessibility */
+.focus-visible:focus {
+  outline: 2px solid #10b981;
+  outline-offset: 2px;
+}
+
+/* Improved text rendering */
+.text-rendering {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Performance optimizations */
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
