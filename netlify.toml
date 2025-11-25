@@ -3,10 +3,6 @@
   command = "npm run build"
   publish = "dist"
 
-[build.environment]
-  NODE_VERSION = "18"
-  NPM_FLAGS = "--production=false"
-
 # Redirect rules for SPA routing
 [[redirects]]
   from = "/*"
@@ -21,7 +17,7 @@
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+    Permissions-Policy = "geolocation=(), microphone=*, camera=*"
 
 # Cache headers for static assets
 [[headers]]
@@ -48,7 +44,18 @@
   force = true
 
 # Environment variables (can be overridden in Netlify UI)
+# WICHTIG: API Keys müssen in Netlify unter "Site settings" > "Environment variables" gesetzt werden
+# und dürfen niemals hier im Code committed werden!
 [build.environment]
   VITE_APP_TITLE = "Kleinanzeigen Genius AI"
-  VITE_APP_DESCRIPTION = "KI-gestützte Kleinanzeigen Erstellung"
-  VITE_APP_URL = "https://deine-app.netlify.app"
+  VITE_APP_DESCRIPTION = "KI-gestützte Kleinanzeigen Erstellung mit Fotoanalyse"
+  VITE_APP_URL = "https://werkaholic-ai-new.netlify.app"
+  VITE_ENABLE_ANALYTICS = "false"
+  VITE_ENABLE_DEBUG = "false"
+  VITE_ENABLE_SERVICE_WORKER = "true"
+  NODE_VERSION = "18"
+  NPM_FLAGS = "--production=false"
+  
+  # API Keys werden in Netlify UI gesetzt:
+  # VITE_OPENROUTER_KEY = "sk-or-v1-deine-api-key"
+  # VITE_GEMINI_KEY = "AIzaSy-deine-api-key"

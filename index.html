@@ -29,6 +29,9 @@
     
     <!-- Content Security Policy für Electron erlauben -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data: blob: wss://generativelanguage.googleapis.com; connect-src * wss://generativelanguage.googleapis.com;">
+    
+    <!-- Permissions Policy für Kamera- und Mikrofon-Zugriff -->
+    <meta http-equiv="Permissions-Policy" content="camera=*, microphone=*, geolocation=*">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
