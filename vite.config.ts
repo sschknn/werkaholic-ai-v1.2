@@ -31,7 +31,7 @@ export default defineConfig(({ mode }) => {
         minify: 'terser',
         terserOptions: {
           compress: {
-            drop_console: mode === 'production' ? false : true, // Behalte Console Logs in Development
+            drop_console: mode === 'production', // Entferne Console Logs in Production
             drop_debugger: mode === 'production'
           }
         },
@@ -44,7 +44,15 @@ export default defineConfig(({ mode }) => {
               ai: ['@google/genai']
             }
           }
-        }
+        },
+        // Production optimiert für Netlify
+        outDir: 'dist',
+        emptyOutDir: true,
+        sourcemap: mode !== 'production',
+        // Asset handling
+        assetsInlineLimit: 4096,
+        // CSS code splitting
+        cssCodeSplit: true
       }
     };
 });

@@ -1,0 +1,54 @@
+# Netlify Build Configuration
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "18"
+  NPM_FLAGS = "--production=false"
+
+# Redirect rules for SPA routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Custom headers for security and performance
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+# Cache headers for static assets
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Service Worker and PWA assets
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/manifest.json"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+# API endpoint proxy (if needed)
+[[redirects]]
+  from = "/api/*"
+  to = "https://your-api-domain.com/:splat"
+  status = 200
+  force = true
+
+# Environment variables (can be overridden in Netlify UI)
+[build.environment]
+  VITE_APP_TITLE = "Kleinanzeigen Genius AI"
+  VITE_APP_DESCRIPTION = "KI-gestützte Kleinanzeigen Erstellung"
+  VITE_APP_URL = "https://deine-app.netlify.app"
