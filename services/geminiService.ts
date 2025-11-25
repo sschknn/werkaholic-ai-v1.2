@@ -15,7 +15,20 @@ const FREE_MODELS = [
 // --- Key Management ---
 
 export const getStoredApiKey = (): string | null => {
-  return localStorage.getItem(STORAGE_KEY_OPENROUTER);
+  const key = localStorage.getItem(STORAGE_KEY_OPENROUTER);
+  console.log('[DEBUG] geminiService.getStoredApiKey():', {
+    keyFound: !!key,
+    keyLength: key?.length,
+    storageKey: STORAGE_KEY_OPENROUTER,
+    timestamp: new Date().toISOString()
+  });
+  
+  if (!key) {
+    console.warn('[DEBUG] WARNUNG: Kein OpenRouter API Key gefunden im localStorage!');
+    console.log('[DEBUG] Verfügbare localStorage Keys:', Object.keys(localStorage));
+  }
+  
+  return key;
 };
 
 export const setStoredApiKey = (key: string) => {

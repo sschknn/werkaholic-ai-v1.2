@@ -3,7 +3,20 @@ import { GoogleGenAI, LiveServerMessage, Modality } from "@google/genai";
 const STORAGE_KEY_GOOGLE = "GOOGLE_API_KEY";
 
 export const getStoredGoogleKey = (): string | null => {
-  return localStorage.getItem(STORAGE_KEY_GOOGLE);
+  const key = localStorage.getItem(STORAGE_KEY_GOOGLE);
+  console.log('[DEBUG] liveService.getStoredGoogleKey():', {
+    keyFound: !!key,
+    keyLength: key?.length,
+    storageKey: STORAGE_KEY_GOOGLE,
+    timestamp: new Date().toISOString()
+  });
+  
+  if (!key) {
+    console.warn('[DEBUG] WARNUNG: Kein Google API Key gefunden im localStorage!');
+    console.log('[DEBUG] Verfügbare localStorage Keys:', Object.keys(localStorage));
+  }
+  
+  return key;
 };
 
 export const setStoredGoogleKey = (key: string) => {

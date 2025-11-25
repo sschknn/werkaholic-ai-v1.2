@@ -361,12 +361,16 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelected, i
   };
 
   const startVoiceService = async () => {
-       const key = getStoredGoogleKey();
-       if (!key) {
-           alert("Für den Sprachmodus benötigst du einen Google Gemini API Key (siehe Einstellungen).");
-           setMode('PHOTO');
-           return;
-       }
+        console.log('[DEBUG] ImageUploader.startVoiceService() gestartet');
+        const key = getStoredGoogleKey();
+        console.log('[DEBUG] ImageUploader: Google Key abgerufen:', !!key, 'Länge:', key?.length);
+        
+        if (!key) {
+            console.error('[DEBUG] FEHLER: Google API Key nicht verfügbar, wechsle zu PHOTO-Mode');
+            alert("Für den Sprachmodus benötigst du einen Google Gemini API Key (siehe Einstellungen).");
+            setMode('PHOTO');
+            return;
+        }
 
        setLiveError(false);
        setLiveStatus("Verbinde...");
